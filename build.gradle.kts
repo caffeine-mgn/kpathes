@@ -1,4 +1,4 @@
-//import pw.binom.publish.getExternalVersion
+import pw.binom.publish.getExternalVersion
 
 plugins {
     id("com.github.gmazzo.buildconfig") version "3.0.3" apply false
@@ -7,7 +7,7 @@ plugins {
 }
 
 allprojects {
-//    version = getExternalVersion()
+    version = getExternalVersion()
     group = "pw.binom"
 
     repositories {
