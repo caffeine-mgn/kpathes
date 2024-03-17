@@ -20,6 +20,7 @@ internal fun String.parsePathMask(
   )
 }
 
+@Suppress("NOTHING_TO_INLINE")
 private inline operator fun String.invoke(index: Int) = if (index >= length) '\u0000' else this[index]
 
 // returns TRUE if text string matches glob-like pattern with * and ?
