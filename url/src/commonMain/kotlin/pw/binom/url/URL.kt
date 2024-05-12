@@ -13,7 +13,7 @@ value class URL internal constructor(val fullPath: String) {
       port: Int?,
       path: Path,
       query: Query?,
-      fragment: String?,
+      fragment: Fragment?,
     ): String {
       require(schema.isNotEmpty()) { "Schema is empty" }
       val sb = StringBuilder()
@@ -38,7 +38,7 @@ value class URL internal constructor(val fullPath: String) {
         sb.append("?").append(query)
       }
       if (fragment != null) {
-        sb.append("#").append(UrlEncoder.encode(fragment))
+        sb.append("#").append(fragment.toString())
       }
       return sb.toString()
     }
@@ -173,13 +173,13 @@ value class URL internal constructor(val fullPath: String) {
       }
       return fullPath.substring(s + 1, e).toQuery
     }
-  val fragment: String?
+  val fragment: Fragment?
     get() {
       val s = fullPath.indexOf('#')
       if (s == -1) {
         return null
       }
-      return UrlEncoder.decode(fullPath.substring(s))
+      return Fragment(fullPath.substring(s))
     }
 
   fun copy(
@@ -190,7 +190,7 @@ value class URL internal constructor(val fullPath: String) {
     port: Int? = this.port,
     path: Path = this.path,
     query: Query? = this.query,
-    fragment: String? = this.fragment,
+    fragment: Fragment? = this.fragment,
   ) = URL(
     new(
       schema = schema,

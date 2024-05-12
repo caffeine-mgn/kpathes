@@ -172,6 +172,6 @@ value class Query constructor(val raw: String) {
   }
 }
 
-private fun decode(it: String) = UrlEncoder.decode(it.replace("+", "%20"))
+private fun decode(it: String) = UrlEncoder.decode(it/*.replace("+", "%20")*/)
 
-private fun encode(it: String) = UrlEncoder.encode(it).replace("%20", "+")
+private fun encode(it: String) = UrlEncoder.encode(it)//.replace("%20", "+")

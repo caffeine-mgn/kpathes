@@ -16,7 +16,7 @@ actual object UrlEncoder {
                 '*'.code.toByte(),
                 in 'a'.code.toByte()..'z'.code.toByte(),
                 in 'A'.code.toByte()..'Z'.code.toByte(),
-                in '0'.code.toByte()..'9'.code.toByte()
+                in '0'.code.toByte()..'9'.code.toByte(),
                 -> sb.append(it.toInt().toChar())
 
                 else -> {
@@ -29,7 +29,7 @@ actual object UrlEncoder {
         return sb.toString()
     }
 
-    actual fun decode(input: String): String{
+    actual fun decode(input: String): String {
         if (input.isEmpty()) {
             return ""
         }
@@ -37,12 +37,15 @@ actual object UrlEncoder {
         var index = 0
         var charCounter = 0
         while (index < input.length) {
-            if (input[index] == '%') {
-                val b1 = (input[++index].toString().toInt(16) and 0xf) shl 4
-                val b2 = input[++index].toString().toInt(16) and 0xf
-                outputBuffer[charCounter++] = (b1 + b2).toByte()
-            } else {
-                outputBuffer[charCounter++] = input[index].code.toByte()
+            when {
+                input[index] == '+' -> outputBuffer[charCounter++] = ' '.code.toByte()
+                input[index] == '%' -> {
+                    val b1 = (input[++index].toString().toInt(16) and 0xf) shl 4
+                    val b2 = input[++index].toString().toInt(16) and 0xf
+                    outputBuffer[charCounter++] = (b1 + b2).toByte()
+                }
+
+                else -> outputBuffer[charCounter++] = input[index].code.toByte()
             }
             index++
         }

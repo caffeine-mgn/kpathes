@@ -6,7 +6,7 @@ import kotlin.jvm.JvmInline
 value class URI(private val raw: String) {
 
     companion object {
-        fun new(schema: String?, path: Path?, query: Query?, fragment: String?): URI {
+        fun new(schema: String?, path: Path?, query: Query?, fragment: Fragment?): URI {
             val sb = StringBuilder()
             if (schema != null) {
                 if (schema.isEmpty()) {
@@ -32,7 +32,7 @@ value class URI(private val raw: String) {
         schema: String? = this.schema,
         path: Path? = this.path,
         query: Query? = this.query,
-        fragment: String? = this.fragment
+        fragment: Fragment? = this.fragment
     ) = new(schema = schema, path = path, query = query, fragment = fragment)
 
     val schema: String?
@@ -59,13 +59,13 @@ value class URI(private val raw: String) {
             return raw.substring(s + 1, e).toQuery
         }
 
-    val fragment: String?
+    val fragment: Fragment?
         get() {
             val s = raw.indexOf('#')
             if (s == -1) {
                 return null
             }
-            return raw.substring(s)
+            return Fragment(raw.substring(s))
         }
 
     val path: Path
