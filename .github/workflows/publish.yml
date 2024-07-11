@@ -21,7 +21,7 @@ jobs:
     strategy:
       matrix:
         os: [macos-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: self-hosted
 
     steps:
     - uses: actions/checkout@v2

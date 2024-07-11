@@ -279,7 +279,7 @@ value class URL internal constructor(val fullPath: String) {
             HostPort(fullpath.root) == host -> copy(
                 query = other.query,
                 fragment = other.fragment,
-                path = fullpath.removeRoot() ?: Path.EMPTY,
+                path = fullpath.removeRoot()?.let { "/$it".toPath } ?: Path.EMPTY,
                 schema = schema,
             )
 

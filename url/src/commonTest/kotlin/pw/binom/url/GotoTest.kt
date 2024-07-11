@@ -4,6 +4,13 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class GotoTest {
+
+    @Test
+    fun otherUrl(){
+        val result = "http://localhost:8080/aaa".toURL().goto("http://localhost:8080/anton".toURI())
+        assertEquals("http://localhost:8080/anton".toURL(), result)
+    }
+
     @Test
     fun otherWithoutSchema() {
         val result = "https://google.com".toURL().goto("://test.com/123".toURI())
