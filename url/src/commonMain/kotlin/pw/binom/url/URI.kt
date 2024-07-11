@@ -32,7 +32,7 @@ value class URI(private val raw: String) {
         schema: String? = this.schema,
         path: Path? = this.path,
         query: Query? = this.query,
-        fragment: Fragment? = this.fragment
+        fragment: Fragment? = this.fragment,
     ) = new(schema = schema, path = path, query = query, fragment = fragment)
 
     val schema: String?
@@ -101,19 +101,25 @@ value class URI(private val raw: String) {
     fun appendQuery(key: String, value: String? = null): URI =
         copy(query = query?.append(key = key, value = value) ?: Query.new(key = key, value = value))
 
-  fun appendQuery(values:Map<String,String?>): URI =
-    copy(query = query?.append(values) ?: Query.new(values))
+    fun appendQuery(values: Map<String, String?>): URI =
+        copy(query = query?.append(values) ?: Query.new(values))
 
     fun appendPath(path: Path) = copy(
         path = this.path.append(path)
     )
 
-    fun toURL(): URL {
-        val schema = schema
-        if (schema.isNullOrEmpty()) {
-            throw MalformedURLException("Can't create URL from URI. Schema missing. Uri: \"$raw\"")
+    fun toURL(schema: String? = this.schema): URL {
+        val thisSchema = this.schema
+        return if (thisSchema==null || thisSchema.isEmpty()) {
+            "$schema$raw".toURL()
+        } else {
+            raw.toURL()
         }
-        return raw.toURL()
+//        val schema = schema
+//        if (schema.isNullOrEmpty()) {
+//            throw MalformedURLException("Can't create URL from URI. Schema missing. Uri: \"$raw\"")
+//        }
+//        return raw.toURL()
     }
 
     operator fun plus(toPath: Path) = copy(path = path.append(toPath))
