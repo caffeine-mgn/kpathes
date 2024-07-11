@@ -19,18 +19,18 @@ class GotoTest {
     @Test
     fun selfRelativeParent() {
         val result = "https://google.com/aa/bb".toURL().goto("../aaa".toURI())
-        assertEquals("https://google.com/aa/aaa".toURL(), result)
+        assertEquals("https://google.com/aaa".toURL(), result)
     }
 
     @Test
     fun selfRelativeCurrent() {
         val result = "https://google.com/aa/bb".toURL().goto("./aaa".toURI())
-        assertEquals("https://google.com/aa/bb/aaa".toURL(), result)
+        assertEquals("https://google.com/aa/aaa".toURL(), result)
     }
 
     @Test
     fun selfRelativeReplaceCurrent() {
         val result = "https://google.com/aa/bb".toURL().goto("aaa".toURI())
-        assertEquals("https://google.com/aa/aaa".toURL(), result)
+        assertEquals("https://google.com/aa/bb/aaa".toURL(), result)
     }
 }

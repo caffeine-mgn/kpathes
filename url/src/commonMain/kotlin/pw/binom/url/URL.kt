@@ -267,7 +267,7 @@ value class URL internal constructor(val fullPath: String) {
             fullpath.startsWith("../") || fullpath.startsWith("./") -> copy(
                 query = other.query,
                 fragment = other.fragment,
-                path = this.path.relative(other.path)
+                path = (this.path.parent ?: Path.EMPTY).relative(other.path)
             )
 
             fullpath.startsWith("/") -> copy(
@@ -286,7 +286,7 @@ value class URL internal constructor(val fullPath: String) {
             other.schema == null -> {
                 copy(
                     schema = schema,
-                    path = (path.parent ?: Path.EMPTY).relative(fullpath),
+                    path = path.relative(fullpath),
                     fragment = other.fragment,
                     query = other.query,
                 )
