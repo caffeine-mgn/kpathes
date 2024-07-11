@@ -34,7 +34,7 @@ jobs:
     - name: 'Run tests'
       uses: eskatos/gradle-command-action@v1
       with:
-        arguments: publish jvmTest
+        arguments: jvmTest
     - name: 'Build and publish'
       uses: eskatos/gradle-command-action@v1
       with:
