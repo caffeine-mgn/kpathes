@@ -190,7 +190,7 @@ value class URL internal constructor(val fullPath: String) {
             if (s == -1) {
                 return null
             }
-            return Fragment(fullPath.substring(s))
+            return Fragment(fullPath.substring(s + 1))
         }
 
     fun copy(
@@ -281,6 +281,12 @@ value class URL internal constructor(val fullPath: String) {
                 fragment = other.fragment,
                 path = fullpath.removeRoot()?.let { "/$it".toPath } ?: Path.EMPTY,
                 schema = schema,
+            )
+
+            other.schema == null && fullpath.isEmpty -> copy(
+                schema = schema,
+                fragment = other.fragment,
+                query = other.query,
             )
 
             other.schema == null -> {

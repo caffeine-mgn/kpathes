@@ -12,6 +12,18 @@ class GotoTest {
     }
 
     @Test
+    fun changeSearch(){
+        val result = "http://localhost:8080/aaa".toURL().goto("?aa=bb".toURI())
+        assertEquals("http://localhost:8080/aaa?aa=bb".toURL(), result)
+    }
+
+    @Test
+    fun changeHashSearch(){
+        val result = "http://localhost:8080/aaa".toURL().goto("#aa=bb".toURI())
+        assertEquals("http://localhost:8080/aaa#aa=bb".toURL(), result)
+    }
+
+    @Test
     fun otherWithoutSchema() {
         val result = "https://google.com".toURL().goto("://test.com/123".toURI())
         assertEquals("https://test.com/123".toURL(), result)

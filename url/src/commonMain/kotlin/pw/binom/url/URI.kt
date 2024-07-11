@@ -65,7 +65,7 @@ value class URI(private val raw: String) {
             if (s == -1) {
                 return null
             }
-            return Fragment(raw.substring(s))
+            return Fragment(raw.substring(s+1))
         }
 
     val path: Path
