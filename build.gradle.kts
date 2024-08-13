@@ -3,7 +3,7 @@ import pw.binom.publish.getExternalVersion
 plugins {
     id("com.github.gmazzo.buildconfig") version "3.0.3" apply false
     id("pw.binom.publish") version "0.1.18" apply false
-    kotlin("multiplatform") version "1.9.23" apply false
+    kotlin("multiplatform") version "2.0.10" apply false
 }
 
 allprojects {

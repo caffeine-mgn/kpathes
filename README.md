@@ -1,6 +1,6 @@
 # Kpath
 [![GitHub license](https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat)](http://www.apache.org/licenses/LICENSE-2.0)
-[![Kotlin 1.9.23](https://img.shields.io/badge/Kotlin-1.9.23-blue.svg?style=flat&logo=kotlin)](http://kotlinlang.org)
+[![Kotlin 2.0.10](https://img.shields.io/badge/Kotlin-2.0.10-blue.svg?style=flat&logo=kotlin)](http://kotlinlang.org)
 
 Library for work with pathes
 
@@ -8,7 +8,7 @@ Library for work with pathes
 Add to your `build.gradle.kts` file:
 ```kotlin
 dependencies{
-    api("pw.binom:url:0.0.5")
+    api("pw.binom:url:0.0.6")
 }
 ```
 
