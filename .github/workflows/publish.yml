@@ -30,7 +30,7 @@ jobs:
       - name: 'Run tests MacOS X64'
         uses: eskatos/gradle-command-action@v1
         with:
-          arguments: jvmTest, macosArm64Test
+          arguments: jvmTest macosArm64Test
 
   publish:
     needs:
