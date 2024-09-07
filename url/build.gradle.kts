@@ -1,5 +1,6 @@
 import pw.binom.publish.allTargets
 import pw.binom.publish.applyDefaultHierarchyBinomTemplate
+import pw.binom.publish.dependsOn
 
 import pw.binom.publish.plugins.PublicationPomInfoExtension
 
@@ -18,6 +19,13 @@ kotlin {
                 }
             }
         }
+    }
+    wasmJs {
+        binaries.library()
+    }
+    wasmWasi{
+        binaries.library()
+        nodejs()
     }
     targets.all {
         compilations.all {
@@ -38,6 +46,7 @@ kotlin {
                 api(kotlin("test-annotations-common"))
             }
         }
+        dependsOn("wasm*Main", "nativeMain")
 //        val jsMain by getting {
 //            dependsOn(commonMain)
 //            dependencies {

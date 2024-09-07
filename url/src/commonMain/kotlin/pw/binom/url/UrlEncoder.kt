@@ -6,6 +6,3 @@ expect object UrlEncoder {
     fun pathEncode(input: String): String
     fun pathDecode(input: String): String
 }
-
-fun aa() {
-}
