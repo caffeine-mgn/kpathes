@@ -65,7 +65,7 @@ value class URI(private val raw: String) {
             if (s == -1) {
                 return null
             }
-            return Fragment(raw.substring(s+1))
+            return Fragment(raw.substring(s + 1))
         }
 
     val path: Path
@@ -110,7 +110,7 @@ value class URI(private val raw: String) {
 
     fun toURL(schema: String? = this.schema): URL {
         val thisSchema = this.schema
-        return if (thisSchema==null || thisSchema.isEmpty()) {
+        return if (thisSchema == null || thisSchema.isEmpty()) {
             "$schema$raw".toURL()
         } else {
             raw.toURL()

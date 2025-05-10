@@ -20,9 +20,7 @@ kotlin {
             }
         }
     }
-    wasmJs {
-        binaries.library()
-    }
+    wasmJs()
     wasmWasi{
         binaries.library()
         nodejs()
