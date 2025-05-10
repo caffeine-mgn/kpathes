@@ -8,7 +8,7 @@ Library for work with pathes
 Add to your `build.gradle.kts` file:
 ```kotlin
 dependencies{
-    api("pw.binom:url:0.0.7")
+    api("pw.binom:url:0.0.8")
 }
 ```
 
