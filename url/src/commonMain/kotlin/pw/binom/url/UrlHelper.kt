@@ -1,12 +1,16 @@
+@file:Suppress("INVISIBLE_REFERENCE", "INVISIBLE_MEMBER")
+
 package pw.binom.url
 
 import kotlin.contracts.ExperimentalContracts
 import kotlin.contracts.InvocationKind
 import kotlin.contracts.contract
+import kotlin.internal.InlineOnly
 
 object UrlHelper {
 
     @OptIn(ExperimentalContracts::class)
+    @InlineOnly
     inline fun parseUrl(
         url: String,
         schema: (String) -> Unit = {},
@@ -14,7 +18,7 @@ object UrlHelper {
         port: (Int?) -> Unit = {},
         auth: (Auth?) -> Unit = {},
         path: (Path) -> Unit = {},
-        query: (Query) -> Unit = {},
+        query: (Query?) -> Unit = {},
         fragment: (Fragment?) -> Unit = {},
     ) {
         contract {
@@ -23,7 +27,7 @@ object UrlHelper {
             callsInPlace(port, InvocationKind.EXACTLY_ONCE)
             callsInPlace(auth, InvocationKind.EXACTLY_ONCE)
             callsInPlace(path, InvocationKind.EXACTLY_ONCE)
-            callsInPlace(query, InvocationKind.UNKNOWN)
+            callsInPlace(query, InvocationKind.EXACTLY_ONCE)
             callsInPlace(fragment, InvocationKind.EXACTLY_ONCE)
         }
         val schemaIndex = url.indexOf("://")
@@ -71,18 +75,23 @@ object UrlHelper {
                         val nextQuery = url.indexOf('&', next)
                         if (nextQuery != -1) {
                             if (nextQuery < fragmentIndex) {
-                                query(Query(url.substring(next, nextQuery)))
+//                                query(Query(url.substring(next, nextQuery)))
                                 next = nextQuery + 1
                                 continue
                             } else {
-                                query(Query(url.substring(next, fragmentIndex)))
+                                val qEnd = if (fragmentIndex == -1) {
+                                    url.length
+                                } else {
+                                    fragmentIndex
+                                }
+                                query(Query(url.substring(queryIndex + 1, qEnd)))
                                 break
                             }
                         } else {
                             if (fragmentIndex == -1) {
                                 break
                             }
-                            query(Query(url.substring(next, fragmentIndex)))
+                            query(Query(url.substring(queryIndex + 1, fragmentIndex)))
                             break
                         }
                     } while (next != -1)
@@ -95,12 +104,14 @@ object UrlHelper {
                 }
 
                 fragmentIndex != -1 -> {
+                    query(null)
                     path(url.substring(domainEndIndex, fragmentIndex).toPath)
                     fragment(Fragment(url.substring(fragmentIndex + 1)))
                 }
 
                 else -> {
                     path(url.substring(domainEndIndex).toPath)
+                    query(null)
                     fragment(null)
                 }
             }

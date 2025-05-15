@@ -116,31 +116,34 @@ value class URL internal constructor(val fullPath: String) {
         }
     val port: Int?
         get() {
-            var s = fullPath.indexOf("//") + 2
-            s = fullPath.indexOf(":", s)
-            val c = fullPath.indexOf('@')
-            if (c != -1) {
-                s = fullPath.indexOf(":", c + 1)
-                if (s == -1) {
-                    return null
-                }
-            }
-            if (s == -1) {
-                return null
-            }
-            s++
-
-            val hash = fullPath.indexOf('#', s)
-            val query = fullPath.indexOf('?', s)
-            val end = fullPath.indexOf('/', s)
-            var e = fullPath.length
-            e = when {
-                end != -1 && end < e -> end
-                query != -1 && query < e -> query
-                hash != -1 && hash < e -> hash
-                else -> e
-            }
-            return fullPath.substring(s, e).toInt()
+            val result: Int?
+            UrlHelper.parseUrl(fullPath, port = { result = it })
+            return result
+//            var s = fullPath.indexOf("//") + 2
+//            s = fullPath.indexOf(":", s)
+//            val c = fullPath.indexOf('@')
+//            if (c != -1) {
+//                s = fullPath.indexOf(":", c + 1)
+//                if (s == -1) {
+//                    return null
+//                }
+//            }
+//            if (s == -1) {
+//                return null
+//            }
+//            s++
+//
+//            val hash = fullPath.indexOf('#', s)
+//            val query = fullPath.indexOf('?', s)
+//            val end = fullPath.indexOf('/', s)
+//            var e = fullPath.length
+//            e = when {
+//                end != -1 && end < e -> end
+//                query != -1 && query < e -> query
+//                hash != -1 && hash < e -> hash
+//                else -> e
+//            }
+//            return fullPath.substring(s, e).toInt()
         }
     val path: Path
         get() {
